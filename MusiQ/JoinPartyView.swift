@@ -6,6 +6,7 @@ struct JoinPartyView: View {
     @ObservedObject var multipeerSessionManager: MultipeerSessionManager
     @Environment(\.dismiss) var dismiss
     @State private var selectedHost: MCPeerID?
+    @State private var isConnected = false
     
     var body: some View {
         NavigationView {
@@ -23,7 +24,7 @@ struct JoinPartyView: View {
                     List(multipeerSessionManager.availableHosts, id: \.self) { host in
                         Button(action: {
                             multipeerSessionManager.connectToHost(host)
-                            dismiss()
+                            selectedHost = host
                         }) {
                             HStack {
                                 Text(host.displayName)
@@ -39,6 +40,9 @@ struct JoinPartyView: View {
                 multipeerSessionManager.stopBrowsing()
                 dismiss()
             })
+        }
+        .fullScreenCover(isPresented: .constant(!multipeerSessionManager.connectedPeers.isEmpty)) {
+            GuestView(sessionManager: sessionManager, multipeerSessionManager: multipeerSessionManager)
         }
     }
 }

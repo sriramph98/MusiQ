@@ -49,6 +49,14 @@ class MultipeerSessionManager: NSObject, ObservableObject {
     func connectToHost(_ host: MCPeerID) {
         mcNearbyServiceBrowser.invitePeer(host, to: mcSession, withContext: nil, timeout: 30)
     }
+    
+    func disconnect() {
+        mcSession.disconnect()
+        stopBrowsing()
+        stopHosting()
+        connectedPeers.removeAll()
+        availableHosts.removeAll()
+    }
 }
 
 // MARK: - MCSessionDelegate

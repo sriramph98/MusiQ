@@ -29,9 +29,22 @@
 		8069F4C32D45D8F500D11C47 /* MusiQUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MusiQUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		807780C92D45DF5400500413 /* Exceptions for "MusiQ" folder in "MusiQ" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 8069F4A82D45D8F300D11C47 /* MusiQ */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		8069F4AB2D45D8F300D11C47 /* MusiQ */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				807780C92D45DF5400500413 /* Exceptions for "MusiQ" folder in "MusiQ" target */,
+			);
 			path = MusiQ;
 			sourceTree = "<group>";
 		};
@@ -399,6 +412,8 @@
 				DEVELOPMENT_TEAM = 34587JNE8E;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MusiQ/Info.plist;
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "MusiQ needs to use your local network to discover and connect with nearby devices for party sessions.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -428,6 +443,8 @@
 				DEVELOPMENT_TEAM = 34587JNE8E;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MusiQ/Info.plist;
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "MusiQ needs to use your local network to discover and connect with nearby devices for party sessions.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

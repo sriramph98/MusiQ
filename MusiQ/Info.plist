@@ -7,5 +7,7 @@
 		<string>_musq-party._tcp</string>
 		<string>_musq-party._udp</string>
 	</array>
+	<key>kTCCServiceMediaLibrary</key>
+	<string>MusiQ needs access</string>
 </dict>
 </plist>

@@ -413,6 +413,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MusiQ/Info.plist;
+				INFOPLIST_KEY_NSAppleMusicUsageDescription = "MusiQ needs access";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "MusiQ needs to use your local network to discover and connect with nearby devices for party sessions.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -444,6 +445,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MusiQ/Info.plist;
+				INFOPLIST_KEY_NSAppleMusicUsageDescription = "MusiQ needs access";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "MusiQ needs to use your local network to discover and connect with nearby devices for party sessions.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

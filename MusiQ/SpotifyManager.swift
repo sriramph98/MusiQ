@@ -1,16 +1,24 @@
 import Foundation
+import MediaPlayer
 
 class SpotifyManager: ObservableObject {
     private let clientId = "eaa54ae378f84abe96b67b88686260d5"
     private let clientSecret = "51846ac87d714a60a5580823c888f61e"
     @Published var searchResults: [SpotifyTrack] = []
     @Published var isLoading = false
+    @Published var nowPlayingItem: MPMediaItem?
+    @Published var playbackState: MPMusicPlaybackState = .stopped
+    @Published var playbackTime: TimeInterval = 0
+    
+    private var playbackObserver: NSObjectProtocol?
+    private var timeObserver: Timer?
     
     struct SpotifyTrack: Identifiable, Codable {
         let id: String
         let name: String
         let artists: [Artist]
         let album: Album
+        let duration_ms: Int
         
         struct Artist: Codable {
             let name: String
@@ -35,6 +43,57 @@ class SpotifyManager: ObservableObject {
     }
     
     private var accessToken: String = ""
+    
+    init() {
+        setupNowPlayingObservers()
+    }
+    
+    private func setupNowPlayingObservers() {
+        // Request permission for media library access
+        MPMediaLibrary.requestAuthorization { [weak self] status in
+            guard status == .authorized else { return }
+            
+            DispatchQueue.main.async {
+                // Observe now playing item changes
+                self?.playbackObserver = NotificationCenter.default.addObserver(
+                    forName: .MPMusicPlayerControllerNowPlayingItemDidChange,
+                    object: MPMusicPlayerController.systemMusicPlayer,
+                    queue: .main
+                ) { [weak self] _ in
+                    self?.updateNowPlayingInfo()
+                }
+                
+                // Start playback time updates
+                self?.timeObserver = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] _ in
+                    self?.updatePlaybackTime()
+                }
+                
+                // Initial update
+                self?.updateNowPlayingInfo()
+                MPMusicPlayerController.systemMusicPlayer.beginGeneratingPlaybackNotifications()
+            }
+        }
+    }
+    
+    private func updateNowPlayingInfo() {
+        nowPlayingItem = MPMusicPlayerController.systemMusicPlayer.nowPlayingItem
+        playbackState = MPMusicPlayerController.systemMusicPlayer.playbackState
+    }
+    
+    private func updatePlaybackTime() {
+        playbackTime = MPMusicPlayerController.systemMusicPlayer.currentPlaybackTime
+    }
+    
+    func togglePlayPause() {
+        switch MPMusicPlayerController.systemMusicPlayer.playbackState {
+        case .playing:
+            MPMusicPlayerController.systemMusicPlayer.pause()
+        case .paused, .stopped:
+            MPMusicPlayerController.systemMusicPlayer.play()
+        default:
+            break
+        }
+    }
     
     func authenticate() async {
         let auth = "\(clientId):\(clientSecret)".data(using: .utf8)!.base64EncodedString()
@@ -85,5 +144,13 @@ class SpotifyManager: ObservableObject {
     
     private struct AuthResponse: Codable {
         let access_token: String
+    }
+    
+    deinit {
+        if let observer = playbackObserver {
+            NotificationCenter.default.removeObserver(observer)
+        }
+        timeObserver?.invalidate()
+        MPMusicPlayerController.systemMusicPlayer.endGeneratingPlaybackNotifications()
     }
 } 

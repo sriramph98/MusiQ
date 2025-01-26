@@ -8,7 +8,7 @@ struct HomeView: View {
     @State private var isNavigatingToPartySession = false
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack {
                 Spacer()
                 
@@ -35,11 +35,6 @@ struct HomeView: View {
                     .cornerRadius(15)
                 }
                 .padding(.bottom, 20)
-                .background(
-                    NavigationLink(destination: PartySessionView(sessionManager: sessionManager, multipeerSessionManager: multipeerSessionManager), isActive: $isNavigatingToPartySession) {
-                        EmptyView()
-                    }
-                )
                 
                 // Join Button
                 Button(action: {
@@ -90,8 +85,13 @@ struct HomeView: View {
             .background(Color(UIColor.systemBackground))
             .navigationTitle("MusiQ")
             .navigationBarTitleDisplayMode(.large)
+            .navigationDestination(isPresented: $isNavigatingToPartySession) {
+                PartySessionView(
+                    sessionManager: sessionManager,
+                    multipeerSessionManager: multipeerSessionManager
+                )
+            }
         }
-        .navigationViewStyle(.stack)
     }
 }
 
